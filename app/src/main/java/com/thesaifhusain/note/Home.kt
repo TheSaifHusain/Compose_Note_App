@@ -1,6 +1,7 @@
 package com.thesaifhusain.note
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -30,31 +31,34 @@ import com.thesaifhusain.note.ViewModel.MainViewModel
 @Composable
 fun Home(navHostController: NavHostController, mainViewModel: MainViewModel) {
     val allData = mainViewModel.repository.getList().observeAsState(listOf()).value
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(text = "All Notes!", fontSize = 30.sp, modifier = Modifier.padding(14.dp))
-        Scaffold(
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { navHostController.navigate("insertScreen") },
+    Surface(Modifier.background(MaterialTheme.colorScheme.surface)) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            Text(text = "All Notes!", fontSize = 30.sp, modifier = Modifier.padding(14.dp))
+            Scaffold(
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = { navHostController.navigate("insertScreen") },
 //                    backgroundColor = Color.Blue,
-                    modifier = Modifier.size(52.dp)
-                ) {
-                    Icon(painter = painterResource(R.drawable.add), contentDescription = "")
-                }
-            },
-        ) {
-            val paddingValues = it
-            LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier.fillMaxSize()) {
-                items(allData) { list ->
-                    EachRow(
-                        list.id,
-                        list.title,
-                        list.description,
-                        navHostController,
-                        mainViewModel
-                    )
+                        modifier = Modifier.size(52.dp)
+                    ) {
+                        Icon(painter = painterResource(R.drawable.add), contentDescription = "")
+                    }
+                },
+            ) {
+                val paddingValues = it
+                LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier.fillMaxSize()) {
+                    items(allData) { list ->
+                        EachRow(
+                            list.id,
+                            list.title,
+                            list.description,
+                            navHostController,
+                            mainViewModel
+                        )
+                    }
                 }
             }
+
         }
 
     }

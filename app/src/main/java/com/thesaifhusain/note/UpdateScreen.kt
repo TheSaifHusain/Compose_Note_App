@@ -44,11 +44,13 @@ fun UpdateScreen(
     val openDialogBox= remember { mutableStateOf(false)    }
     AlertBox(openDialogBox =  openDialogBox, mainViewModel = mainViewModel, id = id!!,
         title =title!! , description = description!!,navController)
+    Surface(Modifier.background(MaterialTheme.colorScheme.surface)) {
+
+    }
     Column(
         modifier = Modifier
             .padding(5.dp)
-            .fillMaxSize()
-            .background(Color.White),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     )
@@ -81,14 +83,15 @@ fun UpdateScreen(
                     .padding(5.dp)
                     .clickable {
                         if (disableEditing.value) {
-                            Toast.makeText(
-                                modContext,
-                                "Enable Editing First (Green Button)",
-                                Toast.LENGTH_SHORT
-                            )
+                            Toast
+                                .makeText(
+                                    modContext,
+                                    "Enable Editing First (Green Button)",
+                                    Toast.LENGTH_SHORT
+                                )
                                 .show()
                         } else {
-                            openDialogBox.value=true
+                            openDialogBox.value = true
                         }
 
 
