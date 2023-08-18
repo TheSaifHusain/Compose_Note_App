@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import com.thesaifhusain.note.Navigation.Navigation
 import com.thesaifhusain.note.ViewModel.MainViewModel
@@ -20,10 +22,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PreBayazTheme {
+                window.navigationBarColor = MaterialTheme.colorScheme.primary.toArgb()
                 Column {
                     Navigation(viewModel)
                 }
-
             }
 
 

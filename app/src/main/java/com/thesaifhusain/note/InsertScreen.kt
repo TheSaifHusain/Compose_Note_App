@@ -25,11 +25,10 @@ fun InsertScreen(mainViewModel: MainViewModel, navHostController:NavHostControll
     val title = remember { mutableStateOf("") }
     val description = remember { mutableStateOf("") }
     val modContext= LocalContext.current
-    Surface(Modifier.background(MaterialTheme.colorScheme.surface)){
         Column(
             modifier = Modifier
-                .padding(5.dp)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.primary),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         )
@@ -65,7 +64,7 @@ fun InsertScreen(mainViewModel: MainViewModel, navHostController:NavHostControll
             }
         }
     }
-}
+
 
 @Preview
 @Composable

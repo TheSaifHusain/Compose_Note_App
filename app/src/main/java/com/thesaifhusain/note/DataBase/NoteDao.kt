@@ -13,7 +13,7 @@ interface NoteDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(noteData: NoteData)
 
-    @Query("UPDATE NoteTable SET title=:title,description=:description Where id LIKE :id")
+    @Query(value = "UPDATE NoteTable SET title=:title,description=:description Where id LIKE :id")
     suspend fun updateManually(id:Int,title:String,description:String)
 
 
