@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(val repository: Repository):ViewModel() 
         repository.deleteR(noteData)
     }
 
-    fun vmUpdateManually(id:Int,title:String,description:String)=viewModelScope.launch {
-        repository.updateM(id,title,description)
+    fun vmUpdateManually(id:Int,title:String,description:String, dateAndTime: String)=viewModelScope.launch {
+        repository.updateM(id,title,description, dateAndTime)
     }
 }

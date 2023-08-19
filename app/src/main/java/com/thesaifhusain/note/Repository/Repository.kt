@@ -20,8 +20,8 @@ class Repository @Inject constructor(private val noteDao: NoteDao) {
         noteDao.delete(note)
     }
 
-    suspend fun updateM(id:Int,title:String,description:String)= withContext(Dispatchers.IO){
-        noteDao.updateManually(id,title,description)
+    suspend fun updateM(id:Int,title:String,description:String,dateAndTime:String)= withContext(Dispatchers.IO){
+        noteDao.updateManually(id,title,description, dateAndTime )
     }
 
     fun getList()=noteDao.getAll()

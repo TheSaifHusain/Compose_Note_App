@@ -25,6 +25,7 @@ class MainActivity : ComponentActivity() {
                 window.navigationBarColor = MaterialTheme.colorScheme.primary.toArgb()
                 Column {
                     Navigation(viewModel)
+
                 }
             }
 
