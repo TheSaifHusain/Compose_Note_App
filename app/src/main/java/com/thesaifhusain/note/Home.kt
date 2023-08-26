@@ -153,7 +153,10 @@ fun EachRow(
                                     Context.CLIPBOARD_SERVICE
                                 ) as ClipboardManager
                                 val clipData =
-                                    ClipData.newPlainText("text", "${title}\n${description}")
+                                    ClipData.newPlainText(
+                                        "text",
+                                        "${title}\n${description}\n${dateAndTime}"
+                                    )
                                 clipboardManager.setPrimaryClip(clipData)
                                 Toast
                                     .makeText(
@@ -175,7 +178,7 @@ fun EachRow(
                                 intent.type = "text/plain"
                                 intent.putExtra(
                                     Intent.EXTRA_TEXT,
-                                    "$title\n$description"
+                                    "$title\n$description\n$dateAndTime"
                                 ) //your Image Url
                                 context.startActivity(Intent.createChooser(intent, "Share Text"))
                             }

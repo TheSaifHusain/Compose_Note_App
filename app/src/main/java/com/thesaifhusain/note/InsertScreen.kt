@@ -5,6 +5,8 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
@@ -93,6 +95,7 @@ fun InsertScreen(mainViewModel: MainViewModel, navHostController:NavHostControll
     {
         Column(
             modifier = Modifier
+//                .verticalScroll(rememberScrollState())
                 .padding(top = it.calculateTopPadding())
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.primary),
@@ -107,18 +110,13 @@ fun InsertScreen(mainViewModel: MainViewModel, navHostController:NavHostControll
                 placeholder = { Text(text = "Please Enter Title",color = MaterialTheme.colorScheme.onPrimary) },
                 singleLine = true,
                 label = { Text(text = "Note Tilte",color = MaterialTheme.colorScheme.onPrimary) },
-                colors = TextFieldDefaults
-                    .outlinedTextFieldColors(
-                        unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
-                    )
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedLabelColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
             OutlinedTextField(value = description.value,
                 onValueChange = { description.value = it },
@@ -128,18 +126,14 @@ fun InsertScreen(mainViewModel: MainViewModel, navHostController:NavHostControll
                     .padding(14.dp),
                 placeholder = { Text(text = "Please enter Your Text",color = MaterialTheme.colorScheme.onPrimary) },
                 label = { Text(text = "Note Text", color = MaterialTheme.colorScheme.onPrimary) },
-                colors = TextFieldDefaults
-                    .outlinedTextFieldColors(
-                        unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
-                    ))
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedLabelColor = MaterialTheme.colorScheme.onPrimary
+                )
+            )
         }
     }
     }

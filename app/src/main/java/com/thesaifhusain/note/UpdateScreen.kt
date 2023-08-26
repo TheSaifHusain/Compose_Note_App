@@ -5,8 +5,11 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
@@ -45,10 +48,7 @@ fun UpdateScreen(
     val title1 = remember { mutableStateOf(title) }
     val description1 = remember { mutableStateOf(description) }
     val modContext = LocalContext.current
-    val disableEditing = remember { mutableStateOf(true) }
     val alphaValue = remember { mutableStateOf(0.2f) }
-    val titleLable= remember { mutableStateOf("Note Title (For edit title Click Green Button)") }
-    val textLable= remember { mutableStateOf("Note Text (For edit text Click Green Button)") }
     val openDialogBox= remember { mutableStateOf(false)    }
     val dateAndTime = remember { mutableStateOf("${getDate()}, ${getTime()}") }
 
@@ -72,17 +72,7 @@ fun UpdateScreen(
                             .padding(5.dp)
                             .size(35.dp)
                             .clickable {
-                                if (disableEditing.value) {
-                                    Toast
-                                        .makeText(
-                                            modContext,
-                                            "Enable Editing First (Green Button)",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                        .show()
-                                } else {
-                                    openDialogBox.value = true
-                                }
+                                openDialogBox.value = true
                             })
                     Icon(imageVector = Icons.Default.Save, contentDescription ="save" ,
                         tint = MaterialTheme.colorScheme.onPrimary,
@@ -90,15 +80,7 @@ fun UpdateScreen(
                             .padding(5.dp)
                             .size(35.dp)
                             .clickable {
-                                if (disableEditing.value) {
-                                    Toast
-                                        .makeText(
-                                            modContext,
-                                            "Enable Editing First",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                        .show()
-                                } else {
+
                                     if (title1.value!!.isNotBlank() && description1.value!!.isNotBlank()) {
                                         mainViewModel.vmUpdateManually(
                                             id,
@@ -116,31 +98,14 @@ fun UpdateScreen(
                                     }
                                     navController.navigateUp()
                                 }
-                            })
-                    Icon(imageVector = Icons.Default.Edit, contentDescription ="edit" ,
-                        tint = Color(0xFF00FA79),
-                        modifier = Modifier
-                            .padding(5.dp)
-                            .size(35.dp)
-                            .clickable {
-                                Toast
-                                    .makeText(
-                                        modContext,
-                                        "Now Note Is Editable.",
-                                        Toast.LENGTH_SHORT
-                                    )
-                                    .show()
-                                titleLable.value = "Update Note Title"
-                                textLable.value = "Update Note Text"
-                                disableEditing.value = false
-                                alphaValue.value = 1f
-                            })
+                            )
                 }
             )
         }
     ){
         Column(
             modifier = Modifier
+//                .verticalScroll(rememberScrollState())
                 .padding(top = it.calculateTopPadding())
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -152,21 +117,19 @@ fun UpdateScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(14.dp),
-                readOnly = disableEditing.value,
                 singleLine = true,
-                label = { Text(text = titleLable.value,color = MaterialTheme.colorScheme.onPrimary)},
-                colors = TextFieldDefaults
-                    .outlinedTextFieldColors(
-                        unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
-                    )
+                label = { Text(text = "Note Title",color = MaterialTheme.colorScheme.onPrimary)},
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                )
             )
             OutlinedTextField(
                 value = description1.value.toString(), onValueChange = { description1.value = it },
@@ -174,20 +137,18 @@ fun UpdateScreen(
                     .weight(2f)
                     .fillMaxWidth()
                     .padding(14.dp),
-                readOnly = disableEditing.value,
-                label = { Text(text = textLable.value,color = MaterialTheme.colorScheme.onPrimary) },
-                colors = TextFieldDefaults
-                    .outlinedTextFieldColors(
-                        unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
-                        focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
-                    )
+                label = { Text(text = "Note Description",color = MaterialTheme.colorScheme.onPrimary) },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                )
             )
         }
     }
