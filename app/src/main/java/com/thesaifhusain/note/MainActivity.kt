@@ -9,9 +9,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
-import com.thesaifhusain.note.Navigation.Navigation
-import com.thesaifhusain.note.ViewModel.MainViewModel
+import com.thesaifhusain.note.navigation.Navigation
 import com.thesaifhusain.note.ui.theme.PreBayazTheme
+import com.thesaifhusain.note.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,20 +25,15 @@ class MainActivity : ComponentActivity() {
                 window.navigationBarColor = MaterialTheme.colorScheme.primary.toArgb()
                 Column {
                     Navigation(viewModel)
-
                 }
             }
-
-
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     PreBayazTheme {
-
     }
 }

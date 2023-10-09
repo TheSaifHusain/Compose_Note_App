@@ -2,8 +2,8 @@ package com.thesaifhusain.note.Di
 
 import android.content.Context
 import androidx.room.Room
-import com.thesaifhusain.note.DataBase.NoteDao
-import com.thesaifhusain.note.DataBase.NoteDataBase
+import com.thesaifhusain.note.dataBase.NoteDao
+import com.thesaifhusain.note.dataBase.NoteDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,14 +17,14 @@ object DaoModule {
 
     @Provides
     @Singleton
-    fun getDbName():String="RoomDb"
+    fun getDbName(): String = "RoomDb"
 
     @Provides
     @Singleton
-    fun getRoomDb(@ApplicationContext context: Context,name:String): NoteDataBase =
-        Room.databaseBuilder(context, NoteDataBase::class.java,name).build()
+    fun getRoomDb(@ApplicationContext context: Context, name: String): NoteDataBase =
+        Room.databaseBuilder(context, NoteDataBase::class.java, name).build()
 
     @Provides
     @Singleton
-    fun getNoteDao(db: NoteDataBase): NoteDao =db.getNoteDao()
+    fun getNoteDao(db: NoteDataBase): NoteDao = db.getNoteDao()
 }
