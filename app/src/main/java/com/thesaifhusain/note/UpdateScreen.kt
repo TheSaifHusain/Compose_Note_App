@@ -3,10 +3,12 @@ package com.thesaifhusain.note
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.FormatAlignLeft
@@ -28,10 +30,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -42,6 +47,7 @@ import com.thesaifhusain.note.dataBase.NoteData
 import com.thesaifhusain.note.utils.getDate
 import com.thesaifhusain.note.utils.getTime
 import com.thesaifhusain.note.viewModel.MainViewModel
+import kotlinx.coroutines.launch
 
 private val state = mutableStateOf(false)
 private val upperCaseState = mutableStateOf(false)
@@ -55,7 +61,7 @@ private val isCenter2 = mutableStateOf(false)
 private val isRight2 = mutableStateOf(false)
 private val isCapital2 = mutableStateOf(false)
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun UpdateScreen(
     id: Int,
@@ -81,7 +87,13 @@ fun UpdateScreen(
     val openDialogBox = remember { mutableStateOf(false) }
     val dateAndTime = remember { mutableStateOf("${getDate()}, ${getTime()}") }
     val mySize = remember { mutableIntStateOf(textSize) }
-    Toast.makeText(modContext, "${thisId.intValue}", Toast.LENGTH_SHORT).show()
+
+    //this for keyboard https://youtu.be/8waTylS0wUc
+    val scope = rememberCoroutineScope()
+    val focus = LocalFocusManager.current
+    val bringIntoViewRequester = BringIntoViewRequester()
+
+//    Toast.makeText(modContext, "${thisId.intValue}", Toast.LENGTH_SHORT).show()
     AlertBox(
         openDialogBox = openDialogBox,
         mainViewModel = mainViewModel,
@@ -102,7 +114,7 @@ fun UpdateScreen(
                 title = {
                     Text(
                         text = "edit",
-                        fontSize = 62.sp,
+                        fontSize = 40.sp,
                         color = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.padding(2.dp)
                     )
@@ -240,7 +252,14 @@ fun UpdateScreen(
                 modifier = Modifier
                     .weight(2f)
                     .fillMaxWidth()
-                    .padding(14.dp),
+                    .padding(14.dp)
+                    .onFocusEvent { event->
+                        if (event.isFocused){
+                            scope.launch {
+                                bringIntoViewRequester.bringIntoView()
+                            }
+                        }
+                    },
                 placeholder = {
                     Text(
                         text = "Please enter Your Text",

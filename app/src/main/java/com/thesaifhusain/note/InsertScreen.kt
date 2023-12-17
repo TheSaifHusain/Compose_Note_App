@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FontDownload
@@ -24,7 +27,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -36,6 +42,7 @@ import com.thesaifhusain.note.dataBase.NoteData
 import com.thesaifhusain.note.utils.getDate
 import com.thesaifhusain.note.utils.getTime
 import com.thesaifhusain.note.viewModel.MainViewModel
+import kotlinx.coroutines.launch
 
 private val state = mutableStateOf(false)
 private val upperCaseState = mutableStateOf(false)
@@ -49,7 +56,8 @@ private val isCenter = mutableStateOf(false)
 private val isRight = mutableStateOf(false)
 private val isCapital = mutableStateOf(false)
 
-@OptIn(ExperimentalMaterial3Api::class)
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun InsertScreen(mainViewModel: MainViewModel, navHostController: NavHostController) {
@@ -60,6 +68,13 @@ fun InsertScreen(mainViewModel: MainViewModel, navHostController: NavHostControl
     val mySize = remember { mutableIntStateOf(16) }
 //     val myFontSize =  remember{ mutableStateOf(mySize.value.sp)}
     Log.i("zz", mySize.intValue.toString())
+
+    //this for keyboard https://youtu.be/8waTylS0wUc
+    val scope = rememberCoroutineScope()
+    val focus = LocalFocusManager.current
+    val bringIntoViewRequester = BringIntoViewRequester()
+
+
     Scaffold(
         containerColor = MaterialTheme.colorScheme.primary,
         topBar = {
@@ -68,7 +83,7 @@ fun InsertScreen(mainViewModel: MainViewModel, navHostController: NavHostControl
                 title = {
                     Text(
                         text = "save",
-                        fontSize = 62.sp,
+                        fontSize = 40.sp,
                         color = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.padding(2.dp)
                     )
@@ -184,7 +199,7 @@ fun InsertScreen(mainViewModel: MainViewModel, navHostController: NavHostControl
                     )
                 },
                 singleLine = true,
-                label = { Text(text = "Note Tilte", color = MaterialTheme.colorScheme.onPrimary) },
+                label = { Text(text = "Note Title", color = MaterialTheme.colorScheme.onPrimary) },
                 colors = OutlinedTextFieldDefaults.colors(
                     cursorColor = MaterialTheme.colorScheme.onPrimary,
                     focusedTextColor = MaterialTheme.colorScheme.onPrimary,
@@ -194,6 +209,7 @@ fun InsertScreen(mainViewModel: MainViewModel, navHostController: NavHostControl
                     focusedLabelColor = MaterialTheme.colorScheme.onPrimary
                 )
             )
+
             OutlinedTextField(
                 value = description.value,
                 onValueChange = {
@@ -211,7 +227,14 @@ fun InsertScreen(mainViewModel: MainViewModel, navHostController: NavHostControl
                 modifier = Modifier
                     .weight(2f)
                     .fillMaxWidth()
-                    .padding(14.dp),
+                    .padding(14.dp)
+                    .onFocusEvent { event->
+                        if (event.isFocused){
+                            scope.launch {
+                                bringIntoViewRequester.bringIntoView()
+                            }
+                        }
+                    },
                 placeholder = {
                     Text(
                         text = "Please enter Your Text",

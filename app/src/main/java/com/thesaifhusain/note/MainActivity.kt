@@ -9,6 +9,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.thesaifhusain.note.navigation.Navigation
 import com.thesaifhusain.note.ui.theme.PreBayazTheme
 import com.thesaifhusain.note.viewModel.MainViewModel
@@ -27,6 +30,13 @@ class MainActivity : ComponentActivity() {
                     Navigation(viewModel)
                 }
             }
+        }
+
+        //this is for keyboard handling from https://youtu.be/8waTylS0wUc
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)){ view, insets ->
+            val bottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+            view.updatePadding(bottom)
+            insets
         }
     }
 }

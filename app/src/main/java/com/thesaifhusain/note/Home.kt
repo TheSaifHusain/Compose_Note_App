@@ -77,7 +77,7 @@ fun Home(navHostController: NavHostController, mainViewModel: MainViewModel) {
                     Text(
                         text = "all notes",
                         color = MaterialTheme.colorScheme.onPrimary,
-                        fontSize = 62.sp,
+                        fontSize = 40.sp,
                         modifier = Modifier.padding(5.dp)
                     )
                 },
@@ -93,11 +93,11 @@ fun Home(navHostController: NavHostController, mainViewModel: MainViewModel) {
                             Icon(
                                 imageVector = Icons.Default.DeleteSweep,
                                 contentDescription = "",
-                                modifier = Modifier.size(32.dp),
+                                modifier = Modifier.size(28.dp),
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         },
-                        modifier = Modifier.padding(end = 14.dp, top = 8.dp)
+                        modifier = Modifier.padding(end = 14.dp, top = 5.dp)
                     )
                 }
             )
