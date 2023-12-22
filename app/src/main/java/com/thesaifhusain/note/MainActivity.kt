@@ -14,11 +14,16 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.thesaifhusain.note.navigation.Navigation
 import com.thesaifhusain.note.ui.theme.PreBayazTheme
+import com.thesaifhusain.note.utils.Utils
 import com.thesaifhusain.note.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var utils: Utils
 
     private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,13 +32,13 @@ class MainActivity : ComponentActivity() {
             PreBayazTheme {
                 window.navigationBarColor = MaterialTheme.colorScheme.primary.toArgb()
                 Column {
-                    Navigation(viewModel)
+                    Navigation(viewModel,utils)
                 }
             }
         }
 
         //this is for keyboard handling from https://youtu.be/8waTylS0wUc
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)){ view, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)) { view, insets ->
             val bottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
             view.updatePadding(bottom)
             insets

@@ -7,13 +7,14 @@ import androidx.navigation.compose.rememberNavController
 import com.thesaifhusain.note.Home
 import com.thesaifhusain.note.InsertScreen
 import com.thesaifhusain.note.UpdateScreen
+import com.thesaifhusain.note.utils.Utils
 import com.thesaifhusain.note.viewModel.MainViewModel
 
 @Composable
-fun Navigation(mainViewModel: MainViewModel) {
+fun Navigation(mainViewModel: MainViewModel, utils: Utils) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "home") {
-        composable("home") { Home(navHostController = navController, mainViewModel) }
+        composable("home") { Home(navHostController = navController, mainViewModel,utils) }
         composable("insertScreen") { InsertScreen(mainViewModel, navController) }
         // Here We Getting Arguments
         composable(
@@ -33,7 +34,6 @@ fun Navigation(mainViewModel: MainViewModel) {
                 id = id!!.toInt(),
                 title = title!!,
                 description = description!!,
-                dateAndTime = dateAndTime!!,
                 textSize = textSize!!.toInt(),
                 isCenter = isTextAlignCenter!!.toBoolean(),
                 isRight = isTextAlignRight!!.toBoolean(),

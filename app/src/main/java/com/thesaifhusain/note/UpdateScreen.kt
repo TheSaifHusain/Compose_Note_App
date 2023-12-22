@@ -7,23 +7,42 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.FormatAlignLeft
+import androidx.compose.material.icons.automirrored.filled.FormatAlignRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FontDownload
 import androidx.compose.material.icons.filled.FormatAlignCenter
-import androidx.compose.material.icons.filled.FormatAlignLeft
-import androidx.compose.material.icons.filled.FormatAlignRight
 import androidx.compose.material.icons.filled.FormatBold
 import androidx.compose.material.icons.filled.FormatSize
 import androidx.compose.material.icons.filled.FormatUnderlined
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.material3.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -67,7 +86,6 @@ fun UpdateScreen(
     id: Int,
     title: String,
     description: String,
-    dateAndTime: String,
     textSize: Int,
     isCenter: Boolean,
     isRight: Boolean,
@@ -76,11 +94,12 @@ fun UpdateScreen(
     mainViewModel: MainViewModel,
     navController: NavHostController
 ) {
-    myTextAlign.value = if (isCenter) TextAlign.Center else if (isRight) TextAlign.Right else TextAlign.Left
+    myTextAlign.value =
+        if (isCenter) TextAlign.Center else if (isRight) TextAlign.Right else TextAlign.Left
     myFontWeight.value = if (isBold) FontWeight.Bold else FontWeight.Normal
     myFontDecoration.value = if (isUnderline) TextDecoration.Underline else TextDecoration.None
 
-    val thisId = remember { mutableIntStateOf(id) }
+    remember { mutableIntStateOf(id) }
     val title1 = remember { mutableStateOf(title) }
     val description1 = remember { mutableStateOf(description) }
     val modContext = LocalContext.current
@@ -90,7 +109,7 @@ fun UpdateScreen(
 
     //this for keyboard https://youtu.be/8waTylS0wUc
     val scope = rememberCoroutineScope()
-    val focus = LocalFocusManager.current
+    LocalFocusManager.current
     val bringIntoViewRequester = BringIntoViewRequester()
 
 //    Toast.makeText(modContext, "${thisId.intValue}", Toast.LENGTH_SHORT).show()
@@ -253,8 +272,8 @@ fun UpdateScreen(
                     .weight(2f)
                     .fillMaxWidth()
                     .padding(14.dp)
-                    .onFocusEvent { event->
-                        if (event.isFocused){
+                    .onFocusEvent { event ->
+                        if (event.isFocused) {
                             scope.launch {
                                 bringIntoViewRequester.bringIntoView()
                             }
@@ -387,7 +406,7 @@ private fun TextAdvance() {
                             }
                     )
                     Icon(
-                        imageVector = Icons.Default.FormatAlignRight,
+                        imageVector = Icons.AutoMirrored.Filled.FormatAlignRight,
                         contentDescription = "",
                         tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier

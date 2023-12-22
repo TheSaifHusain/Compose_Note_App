@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.thesaifhusain.note.dataBase.NoteDao
 import com.thesaifhusain.note.dataBase.NoteDataBase
+import com.thesaifhusain.note.utils.Utils
+import com.thesaifhusain.note.utils.UtilsImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +29,8 @@ object DaoModule {
     @Provides
     @Singleton
     fun getNoteDao(db: NoteDataBase): NoteDao = db.getNoteDao()
+
+    @Provides
+    @Singleton
+    fun provideUtils(@ApplicationContext context: Context) : Utils = UtilsImpl(context)
 }

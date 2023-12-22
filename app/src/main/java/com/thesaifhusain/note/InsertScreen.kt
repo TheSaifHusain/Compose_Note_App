@@ -11,13 +11,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.FormatAlignLeft
+import androidx.compose.material.icons.automirrored.filled.FormatAlignRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FontDownload
 import androidx.compose.material.icons.filled.FormatAlignCenter
-import androidx.compose.material.icons.filled.FormatAlignLeft
-import androidx.compose.material.icons.filled.FormatAlignRight
 import androidx.compose.material.icons.filled.FormatBold
 import androidx.compose.material.icons.filled.FormatSize
 import androidx.compose.material.icons.filled.FormatUnderlined
@@ -27,7 +26,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -48,7 +46,7 @@ private val state = mutableStateOf(false)
 private val upperCaseState = mutableStateOf(false)
 private val myTextAlign = mutableStateOf(TextAlign.Left)
 private val myFontWeight = mutableStateOf(FontWeight.Normal)
-private val myFontDecoration = mutableStateOf<TextDecoration>(TextDecoration.None)
+private val myFontDecoration = mutableStateOf(TextDecoration.None)
 
 private val isBold = mutableStateOf(false)
 private val isUnderline = mutableStateOf(false)
@@ -228,8 +226,8 @@ fun InsertScreen(mainViewModel: MainViewModel, navHostController: NavHostControl
                     .weight(2f)
                     .fillMaxWidth()
                     .padding(14.dp)
-                    .onFocusEvent { event->
-                        if (event.isFocused){
+                    .onFocusEvent { event ->
+                        if (event.isFocused) {
                             scope.launch {
                                 bringIntoViewRequester.bringIntoView()
                             }
@@ -283,7 +281,7 @@ private fun TextAdvance() {
             ) {
                 Column {
                     Icon(
-                        imageVector = Icons.Default.FormatAlignLeft,
+                        imageVector = Icons.AutoMirrored.Filled.FormatAlignLeft,
                         contentDescription = "",
                         tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier
@@ -307,7 +305,7 @@ private fun TextAdvance() {
                             }
                     )
                     Icon(
-                        imageVector = Icons.Default.FormatAlignRight,
+                        imageVector = Icons.AutoMirrored.Filled.FormatAlignRight,
                         contentDescription = "",
                         tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier
